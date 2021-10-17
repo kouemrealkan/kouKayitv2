@@ -1,7 +1,16 @@
+import 'dart:math';
+
+import 'package:basvurukayit/models/user_model.dart';
+import 'package:basvurukayit/screens/secim_ekrani.dart';
+import 'package:basvurukayit/service/yatay_basvuru_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:intl/intl.dart';
 
 class YatayGecisBasvuru extends StatefulWidget {
   const YatayGecisBasvuru({Key? key}) : super(key: key);
@@ -11,35 +20,49 @@ class YatayGecisBasvuru extends StatefulWidget {
 }
 
 class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
-  final checkBoxList = [
-    CheckBoxModal(title: 'KURUM İÇİ YATAY GEÇİŞ'),
-    CheckBoxModal(title: 'KURUMLAR ARASI YATAY GEÇİŞ'),
-    CheckBoxModal(title: 'MER. YER. PUANIYLA YATAY GEÇİŞ '),
-    CheckBoxModal(title: 'YURT DIŞI YATAY GEÇİŞ BAŞVURUSU')
-  ];
+  TextEditingController  _notOrtcontroller = TextEditingController();
+  TextEditingController _yerlesmeYiliController = TextEditingController();
+  TextEditingController  _puanController= TextEditingController();
+  TextEditingController _yabanciDilController = TextEditingController();
+  TextEditingController _basvurulanFakulteController = TextEditingController();
+  TextEditingController _basvurulanBolumController = TextEditingController();
+  TextEditingController _basvurulanProgramYilPuanController = TextEditingController();
 
-  final checkBoxOgrenim = [
-    CheckBoxModal(title: '1.Öğretim'),
-    CheckBoxModal(title: '2.Öğretim')
-  ];
-  final checkBoxSinif = [
-    CheckBoxModal(title: '1'),
-    CheckBoxModal(title: '2'),
-    CheckBoxModal(title: '3'),
-    CheckBoxModal(title: '4'),
-    CheckBoxModal(title: '5 ve üzeri'),
+  String basvuruDurum = "";
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  DateTime currentTime = DateTime.now();
 
-  ];
-  final checkBoxDisiplin  = [
-    CheckBoxModal(title: 'VAR'),
-    CheckBoxModal(title: 'YOK')
-  ];
-  final checkBoxBasvuruOnay = [
-    CheckBoxModal(title: 'BAŞVURUSU UYGUNDUR'),
-    CheckBoxModal(title: 'BAŞVURUSU UYGUN DEĞİLDİR')
-  ];
+  YatayBasvuruService _yatayBasvuruService = YatayBasvuruService();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
+  List<String> _checkedBasvuruTuru = [];
+  List<String> _checkedOgretimTuru = [];
+  List<String> _checkedSinifTuru = [];
+  List<String> _checkedDisiplin = [];
+  List<String> _checkedOnay = [];
+  String secilenHolderBasvuru = " ";
+  String secilenHolderOgretim = "";
+  String secilenHolderSinif = "";
+  String secilenHolderDisiplin = "";
+  String secilenHolderOnay = "";
+
   @override
   Widget build(BuildContext context) {
+    final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    final String formattedDate = dateFormat.format(currentTime).toString();
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -72,7 +95,33 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   Divider(
                     color: Colors.black,
                   ),
-                  ...checkBoxList
+                  CheckboxGroup(
+                    labels: <String>[
+                      "KURUM İÇİ YATAY GEÇİŞ",
+                      "KURUMLAR ARASI YATAY GEÇİŞ",
+                      "MER. YER. PUANIYLA YATAY GEÇİŞ",
+                      "YURT DIŞI YATAY GEÇİŞ BAŞVURUSU"
+                    ],
+                    checked: _checkedBasvuruTuru,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> selectedBasvuru) => setState(() {
+                      if (selectedBasvuru.length > 1) {
+                        selectedBasvuru.removeAt(0);
+                        print('selected length  ${selectedBasvuru.length}');
+                        print('selected value : ${selectedBasvuru.toString()}');
+                        secilenHolderBasvuru = selectedBasvuru.join("");
+                        print("değerrrrrr" + secilenHolderBasvuru);
+                      } else {
+                        print("only one");
+                        print('selected value : ${selectedBasvuru.toString()}');
+                        secilenHolderBasvuru = selectedBasvuru.join("");
+                        print("değerrrrrr" + secilenHolderBasvuru);
+                      }
+                      _checkedBasvuruTuru = selectedBasvuru;
+                    }),
+                  ),
+                  /*   ...checkBoxList
                       .map((item) => ListTile(
                             onTap: () => onItemClicked(item),
                             leading: Checkbox(
@@ -81,7 +130,7 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                             ),
                             title: Text(item.title),
                           ))
-                      .toList()
+                      .toList()  */
                 ],
               ),
               Divider(
@@ -99,42 +148,84 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Adı-Soyadı'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.userName!.toUpperCase()}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'TC NO'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.tcId}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Doğum Tarihi'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.dogumTarihi}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'E-Posta'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.email}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'GSM'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.gsm}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Adres'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.evAdres}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Divider(
@@ -150,7 +241,13 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Kayıtlı Olunan Üniversite'),
+                      labelText: '${loggedInUser.universite}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
@@ -158,7 +255,13 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Kayıtlı Olunan Fakülte/Yüksekokul'),
+                      labelText: '${loggedInUser.fakulte}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               Padding(
@@ -166,7 +269,13 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 child: TextFormField(
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'Kayıtlı Olunan Bölüm/Program'),
+                      labelText: '${loggedInUser.bolum}'),
+                  readOnly: true,
+                  showCursor: false,
+                  autofocus: false,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                 ),
               ),
               ListView(
@@ -186,19 +295,35 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   Divider(
                     color: Colors.black,
                   ),
-                  ...checkBoxOgrenim
-                      .map((item) => ListTile(
-                            onTap: () => onItemClicked(item),
-                            leading: Checkbox(
-                              value: item.value,
-                              onChanged: (value) => onItemClicked(item),
-                            ),
-                            title: Text(item.title),
-                          ))
-                      .toList()
+                  CheckboxGroup(
+                    labels: <String>[
+                      "1.Öğretim",
+                      "2.Öğretim",
+                    ],
+                    checked: _checkedOgretimTuru,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> selectedOgretim) => setState(() {
+                      if (selectedOgretim.length > 1) {
+                        selectedOgretim.removeAt(0);
+                        print('selected length  ${selectedOgretim.length}');
+                        print('selected value : ${selectedOgretim.toString()}');
+                        secilenHolderOgretim = selectedOgretim.join("");
+                        print("değerrrrrr" + secilenHolderOgretim);
+                      } else {
+                        print("only one");
+                        print('selected value : ${selectedOgretim.toString()}');
+                        secilenHolderOgretim = selectedOgretim.join("");
+                        print("değerrrrrr" + secilenHolderOgretim);
+                      }
+                      _checkedOgretimTuru = selectedOgretim;
+                    }),
+                  ),
                 ],
               ),
-
+              Divider(
+                color: Colors.black,
+              ),
               ListView(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -216,16 +341,33 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   Divider(
                     color: Colors.black,
                   ),
-                  ...checkBoxSinif
-                      .map((item) => ListTile(
-                    onTap: () => onItemClicked(item),
-                    leading: Checkbox(
-                      value: item.value,
-                      onChanged: (value) => onItemClicked(item),
-                    ),
-                    title: Text(item.title),
-                  ))
-                      .toList()
+                  CheckboxGroup(
+                    labels: <String>[
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5 ve Üzeri",
+                    ],
+                    checked: _checkedSinifTuru,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> selectedSinif) => setState(() {
+                      if (selectedSinif.length > 1) {
+                        selectedSinif.removeAt(0);
+                        print('selected length  ${selectedSinif.length}');
+                        print('selected value : ${selectedSinif.toString()}');
+                        secilenHolderSinif = selectedSinif.join("");
+                        print("değerrrrrr" + secilenHolderSinif);
+                      } else {
+                        print("only one");
+                        print('selected value : ${selectedSinif.toString()}');
+                        secilenHolderSinif = selectedSinif.join("");
+                        print("değerrrrrr" + secilenHolderSinif);
+                      }
+                      _checkedSinifTuru = selectedSinif;
+                    }),
+                  ),
                 ],
               ),
               ListView(
@@ -245,53 +387,77 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   Divider(
                     color: Colors.black,
                   ),
-                  ...checkBoxDisiplin
-                      .map((item) => ListTile(
-                    onTap: () => onItemClicked(item),
-                    leading: Checkbox(
-                      value: item.value,
-                      onChanged: (value) => onItemClicked(item),
-                    ),
-                    title: Text(item.title),
-                  ))
-                      .toList()
+                  CheckboxGroup(
+                    labels: <String>[
+                      "VAR",
+                      "YOK",
+                    ],
+                    checked: _checkedDisiplin,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> selectedDisiplin) => setState(() {
+                      if (selectedDisiplin.length > 1) {
+                        selectedDisiplin.removeAt(0);
+                        print('selected length  ${selectedDisiplin.length}');
+                        print('selected value : ${selectedDisiplin.toString()}');
+                        secilenHolderDisiplin = selectedDisiplin.join("");
+                        print("değerrrrrr" + secilenHolderDisiplin);
+                      } else {
+                        print("only one");
+                        print('selected value : ${selectedDisiplin.toString()}');
+                        secilenHolderDisiplin = selectedDisiplin.join("");
+                        print("değerrrrrr" + secilenHolderDisiplin);
+                      }
+                      _checkedDisiplin = selectedDisiplin;
+                    }),
+                  ),
                 ],
               ),
-              Divider(color: Colors.black,),
-
+              Divider(
+                color: Colors.black,
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'GENEL NOT ORTALAMASI'),
+                      border: OutlineInputBorder(),
+                      labelText: 'GENEL NOT ORTALAMASI'),
+                  controller: _notOrtcontroller,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'ÖĞRENCİ NUMARASI'),
+                      border: OutlineInputBorder(),
+                      labelText: '${loggedInUser.ogrenciNo}'),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'KAYITLI ÜNİVERSİTEYE YERLEŞME YILI'),
+                      border: OutlineInputBorder(),
+                      labelText: 'KAYITLI ÜNİVERSİTEYE YERLEŞME YILI'),
+                  controller: _yerlesmeYiliController,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'YERLEŞİLEN PUAN TÜRÜ VE PUANI'),
+                      border: OutlineInputBorder(),
+                      labelText: 'YERLEŞİLEN PUAN TÜRÜ VE PUANI'),
+                  controller: _puanController,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'YABANCI DİL PUANI VE TÜRÜ'),
+                      border: OutlineInputBorder(),
+                      labelText: 'YABANCI DİL PUANI VE TÜRÜ'),
+                  controller: _yabanciDilController,
                 ),
               ),
               Divider(
@@ -306,53 +472,33 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'FAKÜLTE / YÜKSEKOKUL/MYO.  ADI'),
+                      border: OutlineInputBorder(),
+                      labelText: 'FAKÜLTE / YÜKSEKOKUL/MYO.  ADI'),
+                  controller: _basvurulanFakulteController,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'BÖLÜM/PROGRAM ADI'),
+                      border: OutlineInputBorder(),
+                      labelText: 'BÖLÜM/PROGRAM ADI'),
+                  controller: _basvurulanBolumController,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'BAŞVURULAN PROGRAMIN YERLEŞİLEN YILA AİT PUANI'),
+                      border: OutlineInputBorder(),
+                      labelText:
+                          'BAŞVURULAN PROGRAMIN YERLEŞİLEN YILA AİT PUANI'),
+                  controller: _basvurulanProgramYilPuanController,
                 ),
               ),
-              ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        'Öğrenim Türü',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.start,
-                      )),
-                  Divider(
-                    color: Colors.black,
-                  ),
-                  ...checkBoxOgrenim
-                      .map((item) => ListTile(
-                    onTap: () => onItemClicked(item),
-                    leading: Checkbox(
-                      value: item.value,
-                      onChanged: (value) => onItemClicked(item),
-                    ),
-                    title: Text(item.title),
-                  ))
-                      .toList()
-                ],
+              Divider(
+                color: Colors.black,
               ),
-              Divider(color: Colors.black,),
               Card(
                 margin: EdgeInsets.fromLTRB(2, 2, 2, 2),
                 child: Padding(
@@ -364,8 +510,28 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                       SizedBox(
                         height: 12,
                       ),
-                      Text(
-                        ' Tarih : ../.../...                                           Ad-Soyad İmza',
+                      Row(
+                        children: [
+                          Text(' Tarih : ${formattedDate.toString()}'),
+                          SizedBox(
+                            width: 140,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                ' Ad-Soyad',
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text('${loggedInUser.userName!.toUpperCase()}'),
+                              SizedBox(
+                                height: 14,
+                              ),
+                              Text('imza')
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 15,
@@ -374,7 +540,9 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   ),
                 ),
               ),
-              Divider(color: Colors.black,),
+              Divider(
+                color: Colors.black,
+              ),
               Text(
                 'BU BÖLÜM ÜNİVERSİTE YETKİLİ BİRİMLERİNCE DOLDURULACAKTIR',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -385,17 +553,30 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
                 children: [
-
-                  ...checkBoxBasvuruOnay
-                      .map((item) => ListTile(
-                    onTap: () => onItemClicked(item),
-                    leading: Checkbox(
-                      value: item.value,
-                      onChanged: (value) => onItemClicked(item),
-                    ),
-                    title: Text(item.title),
-                  ))
-                      .toList()
+                  CheckboxGroup(
+                    labels: <String>[
+                      "BAŞVURUSU UYGUNDUR",
+                      "BAŞVURUSU UYGUN DEĞİLDİR",
+                    ],
+                    checked: _checkedOnay,
+                    onChange: (bool isChecked, String label, int index) => print(
+                        "isChecked: $isChecked   label: $label  index: $index"),
+                    onSelected: (List<String> selectedOnay) => setState(() {
+                      if (selectedOnay.length > 1) {
+                        selectedOnay.removeAt(0);
+                        print('selected length  ${selectedOnay.length}');
+                        print('selected value : ${selectedOnay.toString()}');
+                        secilenHolderOnay = selectedOnay.join("");
+                        print("değerrrrrr" + secilenHolderOnay);
+                      } else {
+                        print("only one");
+                        print('selected value : ${selectedOnay.toString()}');
+                        secilenHolderOnay = selectedOnay.join("");
+                        print("değerrrrrr" + secilenHolderOnay);
+                      }
+                      _checkedOnay = selectedOnay;
+                    }),
+                  ),
                 ],
               ),
               Card(
@@ -416,31 +597,42 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                         height: 15,
                       ),
                       Text(
-                        ' Başvuruyu alan görevlinin                                 Ad-Soyad İmza'
-                      )
+                          ' Başvuruyu alan görevlinin                                 Ad-Soyad İmza')
                     ],
                   ),
                 ),
               ),
+              SizedBox(height: 20,),
+              Padding(padding: const EdgeInsets.only(left: 8,right: 8,bottom: 25),
+              child: InkWell(
+                onTap: (){
+                  _yatayBasvuruService.basvuruOlustur(secilenHolderBasvuru, loggedInUser.userName, loggedInUser.tcId, loggedInUser.dogumTarihi, loggedInUser.email, loggedInUser.gsm, loggedInUser.evAdres, loggedInUser.fakulte, loggedInUser.bolum, secilenHolderOgretim, secilenHolderSinif, secilenHolderDisiplin, _notOrtcontroller.text, loggedInUser.ogrenciNo, _yerlesmeYiliController.text, _puanController.text, _yabanciDilController.text, _basvurulanFakulteController.text, _basvurulanBolumController.text, _basvurulanProgramYilPuanController.text ,basvuruDurum);
+                  showDialog(context: context, builder: (_)=>AlertDialog(
+                    title: Text('Başvuru onayınız alındı'),
+                    content: Text('Kontroller ardından onay/ret işlemi gerçekleştirilecektir'),
+                  )).then((value) =>Navigator.push(context, MaterialPageRoute(builder: (context)=>SecimEkrani())));
 
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green,width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Center(
+                      child: Text("Başvuruyu Onayla",style: TextStyle(color: Colors.black),),
+                    ),
+                  ),
+                ),
+              )
 
+                )
             ],
           ),
         ),
       ),
     );
   }
-
-  onItemClicked(CheckBoxModal item) {
-    final newVal = !item.value;
-    setState(() {
-      item.value = newVal;
-    });
-  }
-}
-
-class CheckBoxModal {
-  String title;
-  bool value;
-  CheckBoxModal({required this.title, this.value = false});
 }
