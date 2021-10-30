@@ -1,8 +1,7 @@
 import 'package:basvurukayit/screens/home_screen.dart';
-import 'package:basvurukayit/screens/intibak_basvuru_ekrani.dart';
-import 'package:basvurukayit/screens/register_screen.dart';
-import 'package:basvurukayit/screens/yatay_gecis_basvuru_ekrani.dart';
-import 'package:basvurukayit/screens/yaz_okulu_basvuru_ekrani.dart';
+import 'package:basvurukayit/screens/basvuru_ekranlari/intibak_basvuru_ekrani.dart';
+import 'package:basvurukayit/screens/basvuru_ekranlari/yatay_gecis_basvuru_ekrani.dart';
+import 'package:basvurukayit/screens/basvuru_ekranlari/yaz_okulu_basvuru_ekrani.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async{

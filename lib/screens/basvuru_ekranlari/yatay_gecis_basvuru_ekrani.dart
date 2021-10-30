@@ -97,10 +97,10 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   ),
                   CheckboxGroup(
                     labels: <String>[
-                      "KURUM İÇİ YATAY GEÇİŞ",
-                      "KURUMLAR ARASI YATAY GEÇİŞ",
-                      "MER. YER. PUANIYLA YATAY GEÇİŞ",
-                      "YURT DIŞI YATAY GEÇİŞ BAŞVURUSU"
+                      "KURUM ICI YATAY GECIS",
+                      "KURUMLAR ARASI YATAY GECIS",
+                      "EK MADDE 1 ILE GECIS",
+                      "YURT DISI YATAY GECIS BASVURUSU"
                     ],
                     checked: _checkedBasvuruTuru,
                     onChange: (bool isChecked, String label, int index) => print(
@@ -297,8 +297,8 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   ),
                   CheckboxGroup(
                     labels: <String>[
-                      "1.Öğretim",
-                      "2.Öğretim",
+                      "1 Ogretim",
+                      "2 Ogretim",
                     ],
                     checked: _checkedOgretimTuru,
                     onChange: (bool isChecked, String label, int index) => print(
@@ -347,7 +347,7 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                       "2",
                       "3",
                       "4",
-                      "5 ve Üzeri",
+                      "5 ve Uzeri",
                     ],
                     checked: _checkedSinifTuru,
                     onChange: (bool isChecked, String label, int index) => print(
@@ -622,7 +622,7 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Center(
-                      child: Text("Başvuruyu Onayla",style: TextStyle(color: Colors.black),),
+                      child: Text("Başvuruyu Kaydet",style: TextStyle(color: Colors.black),),
                     ),
                   ),
                 ),

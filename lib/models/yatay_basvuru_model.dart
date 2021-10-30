@@ -24,7 +24,7 @@ class YatayGecisBasvuruModel {
   String? basvurulanBolum;
   String? basvurulanBolumPuan;
   String? basvuruDurumu;
-
+  String? docId;
   YatayGecisBasvuruModel(
       {this.id,
       this.basvuruTuru,
@@ -48,6 +48,7 @@ class YatayGecisBasvuruModel {
       this.basvurulanFakulte,
       this.basvurulanBolum,
       this.basvurulanBolumPuan,
+      this.docId,
       this.basvuruDurumu});
 
   factory YatayGecisBasvuruModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -59,7 +60,7 @@ class YatayGecisBasvuruModel {
         ogrenciDogumtarih: snapshot["ogrenci"],
         ogrenciEmail: snapshot["ogrenciEmail"],
         ogrenciGsm: snapshot["ogrenciGsm"],
-        ogrenciAdres: snapshot["ogrenciUniversite"],
+        ogrenciAdres: snapshot["ogrenciAdres"],
         ogrenciFakulte: snapshot["ogrenciFakulte"],
         ogrenciBolum: snapshot["ogrenciBolum"],
         ogretimTuru: snapshot["ogretimTuru"],
@@ -74,5 +75,31 @@ class YatayGecisBasvuruModel {
         basvurulanBolum: snapshot["basvurulanBolum"],
         basvurulanBolumPuan: snapshot["basvurulanBolumPuan"],
         basvuruDurumu: snapshot["basvuruDurumu"]);
+  }
+
+  factory YatayGecisBasvuruModel.fromMap(map) {
+    return YatayGecisBasvuruModel(
+        basvuruTuru: map["basvuruTuru"],
+        ogrenciAd: map["ogrenciAd"],
+        ogrenciTc: map["ogrenciTc"],
+        ogrenciDogumtarih: map["ogrenci"],
+        ogrenciEmail: map["ogrenciEmail"],
+        ogrenciGsm: map["ogrenciGsm"],
+        ogrenciAdres: map["ogrenciAdres"],
+        ogrenciFakulte: map["ogrenciFakulte"],
+        ogrenciBolum: map["ogrenciBolum"],
+        ogretimTuru: map["ogretimTuru"],
+        ogrenciSinif: map["ogrenciSinif"],
+        ogrenciDisiplin: map["ogrenciDisiplin"],
+        ogrenciNotOrt: map["ogrenciNotOrt"],
+        ogrenciNumarasi: map["ogrenciNumarasi"],
+        ogrenciYerlesmeYili: map["ogrenciYerlesmeYili"],
+        ogrenciPuan: map["ogrenciPuan"],
+        yabanciDilPuan: map["yabanciDilPuan"],
+        basvurulanFakulte: map["basvurulanFakulte"],
+        basvurulanBolum: map["basvurulanBolum"],
+        basvurulanBolumPuan: map["basvurulanBolumPuan"],
+        basvuruDurumu: map["basvuruDurumu"],
+        docId: map["docId"]);
   }
 }

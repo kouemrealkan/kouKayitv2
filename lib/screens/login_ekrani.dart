@@ -1,7 +1,6 @@
 import 'package:basvurukayit/screens/kayit_ekrani.dart';
-import 'package:basvurukayit/screens/register_screen.dart';
 import 'package:basvurukayit/screens/secim_ekrani.dart';
-import 'package:basvurukayit/screens/yatay_gecis_basvuru_ekrani.dart';
+import 'package:basvurukayit/screens/basvuru_ekranlari/yatay_gecis_basvuru_ekrani.dart';
 import 'package:basvurukayit/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -223,11 +222,27 @@ class _LoginEkraniState extends State<LoginEkrani> {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "Giriş Başarılı !"),
+                // Fluttertoast.showToast(msg: "Giriş Başarılı !"),
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => SecimEkrani())),
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Giriş Başarılı"),
+                        content: Text("Kayıt Sistemine Hoş Heldiniz",style: TextStyle(fontWeight: FontWeight.bold),),
+                      );
+                    }),
               })
           .catchError((e) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Giriş Başarısız"),
+                content: Text("Tekrar deneyin"),
+              );
+            });
         Fluttertoast.showToast(msg: e!.message);
       });
     }
@@ -354,7 +369,7 @@ class _ResetEkraniState extends State<ResetEkrani> {
       appBar: AppBar(
         title: Text('Şifre Sıfırlama'),
         backgroundColor: Colors.green.withOpacity(.75),
-        shadowColor:Colors.grey.withOpacity(.75),
+        shadowColor: Colors.grey.withOpacity(.75),
       ),
       body: Center(
         child: Container(

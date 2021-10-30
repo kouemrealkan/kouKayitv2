@@ -1,5 +1,5 @@
+import 'package:basvurukayit/screens/kayit_ekrani.dart';
 import 'package:basvurukayit/screens/login_ekrani.dart';
-import 'package:basvurukayit/screens/register_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               child: Text('Sisteme Kayıt Ol'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>KayitEkrani()));
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.green,

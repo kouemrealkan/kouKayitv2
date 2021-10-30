@@ -19,15 +19,15 @@ class KayitEkrani extends StatefulWidget {
 }
 
 class _KayitEkraniState extends State<KayitEkrani> {
-  String fakulteListHolder = '';
-  String dropDownFakulteValue = 'MÜHENDİSLİK FAKÜLTESİ';
-  String bolumListHolder = '';
-  String dropDownBolumValue = "BİLGİSAYAR MÜHENDİSLİĞİ";
+  // String dropDownFakulteValue = 'MÜHENDİSLİK FAKÜLTESİ';
+
+  //String dropDownBolumValue = "BİLGİSAYAR MÜHENDİSLİĞİ";
   String value = "";
-  List<DropdownMenuItem<String>> menuitems = List.empty();
-  bool disabledropdown = true;
 
   List<String> dolacakBolum = [];
+  String? fakulteListHolder;
+  String? bolumListHolder;
+
   List<String> fakulteler = [
     'MÜHENDİSLİK FAKÜLTESİ',
     'EĞİTİM FAKÜLTESİ',
@@ -44,37 +44,37 @@ class _KayitEkraniState extends State<KayitEkrani> {
     "İNŞAAT MÜHENDİSLİĞİ"
   ];
 
-  final bolumEgitim = {
-    "1": "FEN BİLGİSİ ÖĞRETMENLİĞİ",
-    "2": "MATEMATİK ÖĞRETMENLİĞİ",
-    "3": "İNGİLİZCE ÖĞRETMENLİĞİ",
-    "4": "Bilgisayar Ve Öğretim Teknolojileri ÖĞRETMENLİĞİ",
-    "5": "TÜRKÇE ÖĞRETMENLİĞİ"
-  };
+  List<String> bolumEgitim = [
+    "FEN BİLGİSİ ÖĞRETMENLİĞİ",
+    "MATEMATİK ÖĞRETMENLİĞİ",
+    "İNGİLİZCE ÖĞRETMENLİĞİ",
+    "Bilgisayar Ve Öğretim Teknolojileri ÖĞRETMENLİĞİ",
+    "TÜRKÇE ÖĞRETMENLİĞİ"
+  ];
 
-  final bolumGuzelSanatlar = {
-    "1": "FOTOĞRAF",
-    "2": "GRAFİK TASARIM",
-    "3": "MÜZİK",
-    "4": "SERAMİK",
-    "5": "HEYKEL"
-  };
+  List<String> bolumGuzelSanatlar = [
+    "FOTOĞRAF",
+    "GRAFİK TASARIM",
+    "MÜZİK",
+    "SERAMİK",
+    "HEYKEL"
+  ];
 
-  final bolumIktisadiIdari = {
-    "1": "İŞLETME",
-    "2": "İKTİSAT",
-    "3": "ULUSLAR ARASI İLİŞKİLER",
-    "4": "SİYASET BİLİMİ VE KAMU YÖNETİMİ",
-    "5": "ÇALIŞMA EKONOMİSİ VE ENDÜSTRİ İLİŞKİLERİ"
-  };
+  List<String> bolumIktisadiIdari = [
+    "İŞLETME",
+    "İKTİSAT",
+    "ULUSLAR ARASI İLİŞKİLER",
+    "SİYASET BİLİMİ VE KAMU YÖNETİMİ",
+    "ÇALIŞMA EKONOMİSİ VE ENDÜSTRİ İLİŞKİLERİ"
+  ];
 
-  final bolumIletisim = {
-    "1": "GAZETECİLİK",
-    "2": "HALKA İLİŞKİLER VE TANITIM",
-    "3": "RADYO TELEVİZYON VE SİNEMA",
-    "4": "GÖRSEL İLETİŞİM TASARIMI",
-    "5": "REKLAMCILIK"
-  };
+  List<String> bolumIletisim = [
+    "GAZETECİLİK",
+    "HALKA İLİŞKİLER VE TANITIM",
+    "RADYO TELEVİZYON VE SİNEMA",
+    "GÖRSEL İLETİŞİM TASARIMI",
+    "REKLAMCILIK"
+  ];
 
 /*  void populateMuh(){
     for(String key in bolumMuhendislik.keys){
@@ -394,6 +394,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
 
     final evAdresField = TextFormField(
       autofocus: false,
+      maxLines: 4,
       controller: _evAdresController,
       keyboardType: TextInputType.text,
       validator: (value) {
@@ -409,11 +410,11 @@ class _KayitEkraniState extends State<KayitEkrani> {
       decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.house,
-            color: Colors.white,
+            color: Colors.green,
           ),
           hintText: 'Ev adresi',
           prefixText: ' ',
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.green),
           focusColor: Colors.white,
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
@@ -427,6 +428,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
       autofocus: false,
       controller: _isAdresController,
       keyboardType: TextInputType.text,
+      maxLines: 4,
       onSaved: (value) {
         _isAdresController.text = value!;
       },
@@ -434,11 +436,11 @@ class _KayitEkraniState extends State<KayitEkrani> {
       decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.work,
-            color: Colors.white,
+            color: Colors.green,
           ),
           hintText: 'Varsa İş adresi',
           prefixText: ' ',
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.green),
           focusColor: Colors.white,
           focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
@@ -560,38 +562,38 @@ class _KayitEkraniState extends State<KayitEkrani> {
           border: Border.all(color: Colors.white, width: 4),
         ),
         child: DropdownButton<String>(
-            value: dropDownFakulteValue,
-            onChanged: (String? data) {
-              setState(() {
-                dropDownFakulteValue = data!;
-                fakulteListHolder = dropDownFakulteValue;
-              });
-            },
-            iconSize: 30,
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
-            isExpanded: true,
-            items: fakulteler.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList()));
-
-    void yerlestirMuhendislik() {
-      bolumMuhendislik.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList();
-    }
-
-    void _selectedValue(value) {
-      if(value == "MÜHENDİSLİK FAKÜLTESİ"){
-        fakulteler = [];
-        yerlestirMuhendislik();
-      }
-    }
+          value: fakulteListHolder,
+          hint: Text("Fakülte Seçimi"),
+          onChanged: (fakulteData) {
+            if (fakulteData == 'MÜHENDİSLİK FAKÜLTESİ') {
+              dolacakBolum = bolumMuhendislik;
+            } else if (fakulteData == "EĞİTİM FAKÜLTESİ") {
+              dolacakBolum = bolumEgitim;
+            } else if (fakulteData == "GÜZEL SANATLAR FAKÜLTESİ") {
+              dolacakBolum = bolumGuzelSanatlar;
+            } else if (fakulteData == "İKTİSADİ VE İDARİ BİLİMLER FAKÜLTESİ") {
+              dolacakBolum = bolumIktisadiIdari;
+            } else if (fakulteData == "İLETİŞİM FAKÜLTESİ") {
+              dolacakBolum = bolumIletisim;
+            } else {
+              dolacakBolum = [];
+            }
+            setState(() {
+              bolumListHolder = null;
+              fakulteListHolder = fakulteData;
+              print("secilen fakulte :"  +fakulteListHolder!);
+            });
+          },
+          iconSize: 30,
+          icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+          isExpanded: true,
+          items: fakulteler.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ));
 
     final bolumList = Column(
       children: [
@@ -603,18 +605,24 @@ class _KayitEkraniState extends State<KayitEkrani> {
               border: Border.all(color: Colors.white, width: 4),
             ),
             child: DropdownButton<String>(
-                value: dropDownBolumValue,
-                onChanged: (value) => _selectedValue(value),
-                iconSize: 30,
-                icon: Icon(Icons.arrow_drop_down, color: Colors.white),
-                isExpanded: true,
-                items: bolumMuhendislik
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList())),
+              hint: Text("Bölüm Seçimi"),
+              value: bolumListHolder,
+              onChanged: (bolumData) {
+                setState(() {
+                  bolumListHolder = bolumData;
+                  print("secilen bölüm" + bolumListHolder!);
+                });
+              },
+              iconSize: 30,
+              icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+              isExpanded: true,
+              items: dolacakBolum.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            )),
       ],
     );
 
@@ -882,9 +890,23 @@ class _KayitEkraniState extends State<KayitEkrani> {
                     SizedBox(height: 20),
                     gsmField,
                     SizedBox(height: 20),
-                    evAdresField,
+                    Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: evAdresField,
+                      ),
+                    ),
+                    // evAdresField,
                     SizedBox(height: 20),
-                    isAdresField,
+                    Card(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: isAdresField,
+                      ),
+                    ),
+                    // isAdresField,
                     SizedBox(height: 20),
                     universiteField,
                     SizedBox(height: 20),
@@ -981,7 +1003,7 @@ class _KayitEkraniState extends State<KayitEkrani> {
     userModel.universite = _universiteController.text;
     userModel.fakulte = fakulteListHolder;
     //userModel.fakulte = _fakulteController.text;
-    userModel.bolum = _bolumController.text;
+    userModel.bolum = bolumListHolder;
     userModel.ogrenciNo = _ogrenciNoController.text;
     userModel.sinif = _sinifController.text;
     userModel.resimUrl = resimUrl;
@@ -1012,3 +1034,30 @@ class _KayitEkraniState extends State<KayitEkrani> {
     }
   }
 }
+
+/*
+ final fakulteList = Container(
+        margin: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white, width: 4),
+        ),
+        child: DropdownButton<String>(
+            value: dropDownFakulteValue,
+            onChanged: (String? data) {
+              setState(() {
+                dropDownFakulteValue = data!;
+                fakulteListHolder = dropDownFakulteValue;
+              });
+            },
+            iconSize: 30,
+            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
+            isExpanded: true,
+            items: fakulteler.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList()));
+ */
