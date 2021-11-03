@@ -48,7 +48,7 @@ class YazOkuluBasvuruModel {
         yazOkuluAlinanDersler: snapshot["yazOkuluAlinanDersler"],
         basvuruDurumu: snapshot["basvuruDurumu"]);
   }
-  Map<String, dynamic> sorumluDerslerItem() {
+ /* Map<String, dynamic> sorumluDerslerItem() {
     return {
       'sorumluOlunanDersler': FieldValue.arrayUnion([
         {
@@ -61,19 +61,19 @@ class YazOkuluBasvuruModel {
       ])
     };
   }
-
-  Map<String, dynamic> yazOkuluAlinanDerslerItem() {
+  */
+ /* Map<String, dynamic> yazOkuluAlinanDerslerItem(String fakulteBolum,String dersAdikodu,String t, String u, String l ,String akts) {
     return {
       'yazOkuluAlinanDersler': FieldValue.arrayUnion([
         {
-          "Fakulte ve Bolum": "fakulteBolum",
-          "Ders Adi ve Kodu": "dersAdiveKodu",
-          "t": "t",
-          "u": "u",
-          "l": "l",
-          "AKTS": "akts"
+          "Fakulte ve Bolum": fakulteBolum,
+          "Ders Adi ve Kodu": dersAdikodu,
+          "t": t,
+          "u": u,
+          "l": l,
+          "AKTS": akts
         }
       ])
     };
-  }
+  }  */
 }

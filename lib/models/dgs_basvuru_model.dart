@@ -19,20 +19,20 @@ class DgsBasvuruModel {
 
   DgsBasvuruModel(
       {this.id,
-        this.ogrenciAd,
-        this.ogrenciTc,
-        this.ogrenciDogumTarih,
-        this.ogrenciEmail,
-        this.ogrenciGsm,
-        this.ogrenciAdres,
-        this.ogrenciUniversite,
-        this.ogrenciFakulte,
-        this.ogrenciBolum,
-        this.ogrenciDiplomaNotu,
-        this.ogrenciNumarasi,
-        this.ogrenciYerlesmeYili,
-        this.ogrenciYerlesmePuani,
-        this.basvuruDurumu});
+      this.ogrenciAd,
+      this.ogrenciTc,
+      this.ogrenciDogumTarih,
+      this.ogrenciEmail,
+      this.ogrenciGsm,
+      this.ogrenciAdres,
+      this.ogrenciUniversite,
+      this.ogrenciFakulte,
+      this.ogrenciBolum,
+      this.ogrenciDiplomaNotu,
+      this.ogrenciNumarasi,
+      this.ogrenciYerlesmeYili,
+      this.ogrenciYerlesmePuani,
+      this.basvuruDurumu});
 
   factory DgsBasvuruModel.fromSnapshot(DocumentSnapshot snapshot) {
     return DgsBasvuruModel(

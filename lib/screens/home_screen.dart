@@ -1,3 +1,4 @@
+import 'package:basvurukayit/screens/admin/admin_login_ekrani.dart';
 import 'package:basvurukayit/screens/kayit_ekrani.dart';
 import 'package:basvurukayit/screens/login_ekrani.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,65 +18,87 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(children: <Widget>[
-        SizedBox(
-          height: 60.0,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(
-              image: AssetImage('assets/images/logo.png'),
-              height: 150.0,
-              width: 120.0,
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text(
-                'Kocaeli Üniversitesi Başvuru Kayıt Sistemi',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.green,
-                ),
+      body: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          SizedBox(
+            height: 60.0,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image(
+                image: AssetImage('assets/images/logo.png'),
+                height: 150.0,
+                width: 120.0,
               ),
-            ),
-            SizedBox(
-              height: 50.0,
-            ),
-            ElevatedButton(
-              child: Text('Sisteme Kayıt Ol'),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>KayitEkrani()));
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green,
-                padding: (EdgeInsets.fromLTRB(10, 10, 10, 10)),
-                textStyle: TextStyle(
-                  fontSize: 20,
-                ),
-                shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            ElevatedButton(
-              child: Text('Sisteme Giriş Yap'),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginEkrani()));
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  padding: (EdgeInsets.fromLTRB(10, 10, 10, 10)),
-                  textStyle: TextStyle(
-                    fontSize: 20,
+              Container(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: Text(
+                  'Kocaeli Üniversitesi Başvuru Kayıt Sistemi',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.green,
                   ),
-                  shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
+                ),
               ),
-            )
-          ],
-        ),
-      ]),
+              SizedBox(
+                height: 50.0,
+              ),
+              ElevatedButton(
+                child: Text('Sisteme Kayıt Ol'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => KayitEkrani()));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    padding: (EdgeInsets.fromLTRB(10, 10, 10, 10)),
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0))),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              ElevatedButton(
+                child: Text('Sisteme Giriş Yap'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginEkrani()));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    padding: (EdgeInsets.fromLTRB(10, 10, 10, 10)),
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0))),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              ElevatedButton(
+                child: Text('Admin Paneline Giriş'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AdminLogin()));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    padding: (EdgeInsets.fromLTRB(10, 10, 10, 10)),
+                    textStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0))),
+              ),
+            ],
+          ),
+        ]),
+      ),
     );
   }
 }

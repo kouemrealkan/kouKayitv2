@@ -169,6 +169,7 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Başvurulan Üniversite'),
+                  controller: _universiteController,
                 ),
               ),
               Padding(
@@ -178,6 +179,7 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Yaz Okulu Başlama-Bitiş Tarihleri'),
+                  controller: _yazOkuluTarihController,
                 ),
               ),
               SizedBox(

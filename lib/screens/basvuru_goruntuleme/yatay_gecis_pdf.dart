@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'dart:io';
 import 'package:intl/date_symbol_data_local.dart';
@@ -118,9 +119,11 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 40);
     graphics.drawRectangle(brush: solidBrush, bounds: bounds);
   //  PdfTrueTypeFont(File(""));
-    PdfFont subHeadingFont = PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14);
+   //PdfFont fontStyle = PdfFont.ttf(await rootBundle.load("assets/fonts/arial.tff"));
+    PdfFont styleFont = PdfTrueTypeFont(await _readFontData(), 14);
+   // PdfFont subHeadingFont = PdfTrueTypeFont(File("assets/fonts/arial.ttf").readAsBytesSync(),14);
     PdfTextElement element =
-        PdfTextElement(text: "KOCAELI UNIVERSITESI", font: subHeadingFont);
+        PdfTextElement(text: "KOCAELI UNIVERSITESI", font: styleFont);
     element.brush = PdfBrushes.white;
     PdfLayoutResult result = element.draw(
         page: page, bounds: Rect.fromLTWH(10, bounds.top + 15, 0, 0))!;
@@ -128,29 +131,28 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     initializeDateFormatting('tr', null);
     String currentDate =
         'TARIH ' + DateFormat.yMMMd('tr').format(DateTime.now());
-    Size textSize = subHeadingFont.measureString(currentDate);
+    Size textSize = styleFont.measureString(currentDate);
     Offset textPosition = Offset(
         graphics.clientSize.width - textSize.width - 10, result.bounds.top);
-    graphics.drawString(currentDate, subHeadingFont,
+    graphics.drawString(currentDate, styleFont,
         brush: element.brush,
         bounds: Offset(graphics.clientSize.width - textSize.width - 10,
                 result.bounds.top) &
             Size(textSize.width + 2, 20));
     element = PdfTextElement(
         text: 'Ogrenci Ad : ${yatayGecisBasvuruModel.ogrenciAd}',
-        font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14
-        ));
+        font: styleFont
+    );
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 25, 0, 0))!;
 
 
-    final fontStyle = await rootBundle.load("assets/fonts/arial.tff");
    // PdfFont helvetica = PdfStandardFont(PdfFontFamily.helvetica, 15);
     element = PdfTextElement(
         text: 'Basvuru Turu : ${yatayGecisBasvuruModel.basvuruTuru}',
-        font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+        font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
@@ -158,21 +160,21 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     element = PdfTextElement(
         text:
             'Basvurulan Fakulte : ${yatayGecisBasvuruModel.basvurulanFakulte}',
-        font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+        font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
     element = PdfTextElement(
         text: 'Basvurulan Bolum : ${yatayGecisBasvuruModel.basvurulanBolum}',
-        font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+        font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
     element = PdfTextElement(
         text: 'Ogrenci Numarasi : ${yatayGecisBasvuruModel.ogrenciNumarasi}',
-        font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+        font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
@@ -182,17 +184,17 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
         'Beyan ettigim bilgilerin veya bilgilerin gercege aykiri olmasi veya daha once\n yatay gecis yapmis olmam halimde hakkimda '
         'cezai islemlerin yurutulecegini\n ve kaydim yapilmis olsa dahi silinecegini kabul ediyorum.';
 
-    element = PdfTextElement(text: paragraphText, font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+    element = PdfTextElement(text: paragraphText, font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
-    element = PdfTextElement(text: 'Ad-Soyad', font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+    element = PdfTextElement(text: 'Ad-Soyad', font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTRB(300, result.bounds.bottom + 50, 0, 0))!;
-    element = PdfTextElement(text: 'imza', font: PdfTrueTypeFont(File("assets/fonts/arial.tff").readAsBytesSync(),14));
+    element = PdfTextElement(text: 'imza', font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
@@ -217,6 +219,11 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
 Future<Uint8List> _readImageData(String name) async {
   final data = await rootBundle.load('assets/images/$name');
   return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+}
+
+Future<List<int>> _readFontData() async {
+  final ByteData bytes = await rootBundle.load('assets/fonts/arial.ttf');
+  return bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
 }
 
 /*

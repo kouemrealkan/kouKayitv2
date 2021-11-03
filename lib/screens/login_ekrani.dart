@@ -1,3 +1,4 @@
+import 'package:basvurukayit/screens/admin/admin_login_ekrani.dart';
 import 'package:basvurukayit/screens/kayit_ekrani.dart';
 import 'package:basvurukayit/screens/secim_ekrani.dart';
 import 'package:basvurukayit/screens/basvuru_ekranlari/yatay_gecis_basvuru_ekrani.dart';
@@ -207,6 +208,30 @@ class _LoginEkraniState extends State<LoginEkrani> {
                         ),
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Admin Girişi için:  '),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdminLogin()));
+                        },
+                        child: Text(
+                          "Admin Girişe git",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -230,7 +255,10 @@ class _LoginEkraniState extends State<LoginEkrani> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text("Giriş Başarılı"),
-                        content: Text("Kayıt Sistemine Hoş Heldiniz",style: TextStyle(fontWeight: FontWeight.bold),),
+                        content: Text(
+                          "Kayıt Sistemine Hoş Heldiniz",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       );
                     }),
               })

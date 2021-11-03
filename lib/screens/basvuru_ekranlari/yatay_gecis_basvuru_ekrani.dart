@@ -557,6 +557,11 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                     labels: <String>[
                       "BAŞVURUSU UYGUNDUR",
                       "BAŞVURUSU UYGUN DEĞİLDİR",
+
+                    ],
+                    disabled: [
+                      "BAŞVURUSU UYGUNDUR",
+                      "BAŞVURUSU UYGUN DEĞİLDİR"
                     ],
                     checked: _checkedOnay,
                     onChange: (bool isChecked, String label, int index) => print(
