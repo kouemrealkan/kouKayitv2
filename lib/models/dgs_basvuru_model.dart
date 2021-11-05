@@ -15,6 +15,9 @@ class DgsBasvuruModel {
   String? ogrenciDiplomaNotu;
   String? ogrenciYerlesmePuani;
   String? ogrenciYerlesmeYili;
+  String? olusturmaTarihi;
+  String? onaylanmaTarihi;
+  String? reddedilmeTarihi;
   String? basvuruDurumu;
 
   DgsBasvuruModel(
@@ -32,6 +35,9 @@ class DgsBasvuruModel {
       this.ogrenciNumarasi,
       this.ogrenciYerlesmeYili,
       this.ogrenciYerlesmePuani,
+      this.olusturmaTarihi,
+      this.onaylanmaTarihi,
+      this.reddedilmeTarihi,
       this.basvuruDurumu});
 
   factory DgsBasvuruModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -50,6 +56,32 @@ class DgsBasvuruModel {
         ogrenciDiplomaNotu: snapshot["ogrenciDiplomaNotu"],
         ogrenciYerlesmePuani: snapshot["ogrenciYerlesmePuani"],
         ogrenciYerlesmeYili: snapshot["ogrenciYerlesmeYili"],
+        olusturmaTarihi: snapshot["olusturmaTarihi"],
+        onaylanmaTarihi: snapshot["onaylanmaTarihi"],
+        reddedilmeTarihi: snapshot["reddedilmeTarihi"],
         basvuruDurumu: snapshot["basvuruDurumu"]);
   }
+
+  factory DgsBasvuruModel.fromMap(map){
+     return DgsBasvuruModel(
+         id: map["id"],
+         ogrenciAd: map["ogrenciAd"],
+         ogrenciTc: map["ogrenciTc"],
+         ogrenciDogumTarih: map["ogrenciDogumTarih"],
+         ogrenciEmail: map["ogrenciEmail"],
+         ogrenciGsm: map["ogrenciGsm"],
+         ogrenciAdres: map["ogrenciAdres"],
+         ogrenciNumarasi: map["ogrenciNumarasi"],
+         ogrenciUniversite: map["ogrenciUniversite"],
+         ogrenciFakulte: map["ogrenciFakulte"],
+         ogrenciBolum: map["ogrenciBolum"],
+         ogrenciDiplomaNotu: map["ogrenciDiplomaNotu"],
+         ogrenciYerlesmePuani: map["ogrenciYerlesmePuani"],
+         ogrenciYerlesmeYili: map["ogrenciYerlesmeYili"],
+         olusturmaTarihi: map["olusturmaTarihi"],
+         onaylanmaTarihi: map["onaylanmaTarihi"],
+         reddedilmeTarihi: map["reddedilmeTarihi"],
+         basvuruDurumu: map["basvuruDurumu"]);
+  }
+
 }

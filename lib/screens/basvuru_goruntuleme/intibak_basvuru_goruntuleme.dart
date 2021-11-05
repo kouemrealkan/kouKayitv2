@@ -1,32 +1,30 @@
 import 'package:basvurukayit/models/user_model.dart';
+import 'package:basvurukayit/screens/basvuru_goruntuleme/intibak_pdf.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/yaz_okulu_pdf.dart';
-import 'package:basvurukayit/service/yaz_okulu_basvuru_service.dart';
+import 'package:basvurukayit/service/intibak_basvuru_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../secim_ekrani.dart';
 
-class YazOkuluBasvuruGoruntuleme extends StatefulWidget {
-  const YazOkuluBasvuruGoruntuleme({Key? key}) : super(key: key);
+class IntibakGoruntuleme extends StatefulWidget {
+  const IntibakGoruntuleme({Key? key}) : super(key: key);
 
   @override
-  _YazOkuluBasvuruGoruntulemeState createState() =>
-      _YazOkuluBasvuruGoruntulemeState();
+  _IntibakGoruntulemeState createState() => _IntibakGoruntulemeState();
 }
 
-class _YazOkuluBasvuruGoruntulemeState
-    extends State<YazOkuluBasvuruGoruntuleme> {
-  YazOkuluBasvuruService _yazOkuluBasvuruService = YazOkuluBasvuruService();
-
+class _IntibakGoruntulemeState extends State<IntibakGoruntuleme> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  IntibakBasvuruService _intibakBasvuruService = IntibakBasvuruService();
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.green,
       child: StreamBuilder<QuerySnapshot>(
-        stream: _yazOkuluBasvuruService.basvurulariGetir(loggedInUser),
+        stream: _intibakBasvuruService.basvurulariGetir(loggedInUser),
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? CircularProgressIndicator()
@@ -38,7 +36,7 @@ class _YazOkuluBasvuruGoruntulemeState
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: 370,
+                        height: 395,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.green, width: 1),
@@ -65,9 +63,6 @@ class _YazOkuluBasvuruGoruntulemeState
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
-                              ),
-                              SizedBox(
-                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -123,7 +118,60 @@ class _YazOkuluBasvuruGoruntulemeState
                                   ),
                                 ],
                               ),
-
+                              Row(
+                                children: [
+                                  Text(
+                                    "ÖĞRENCİ AÇIK ADRES : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['ogrenciAdres']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "ÖĞRENCİ EMAİL : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['ogrenciEmail']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "ÖĞRENCİ GSM : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['ogrenciGsm']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                               Text(
                                 "SORUMLU OLUNAN DERSLER : ",
                                 style: TextStyle(
@@ -140,28 +188,29 @@ class _YazOkuluBasvuruGoruntulemeState
                               ),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child:DataTable(
+                                child: DataTable(
                                   columns: <DataColumn>[
                                     DataColumn(label: Text('Ders Adı ve Kodu')),
                                     DataColumn(label: Text('Akts')),
                                     DataColumn(label: Text('t')),
                                     DataColumn(label: Text('u')),
                                   ],
-                                  rows: <DataRow> [
-                                   DataRow(
-                                     cells: [
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                     ]
-                                   )
+                                  rows: <DataRow>[
+                                    DataRow(cells: [
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                    ])
                                   ],
-                                ) ,
+                                ),
                               ),
                               Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ElevatedButton(
                                     child: Text("PDF Önizleme"),
@@ -175,7 +224,7 @@ class _YazOkuluBasvuruGoruntulemeState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  YazOkuluBasvuruPdf(
+                                                  IntibakBasvuruPdf(
                                                       id: basvuruListesi[
                                                       "id"])));
                                     },
@@ -196,8 +245,7 @@ class _YazOkuluBasvuruGoruntulemeState
                                     ),
                                   ),
                                 ],
-                              )
-
+                              ),
                             ],
                           ),
                         ),

@@ -22,8 +22,11 @@ class _DgsBasvuruState extends State<DgsBasvuru> {
   TextEditingController();
   TextEditingController _ogrenciYerlesmePuaniController =
   TextEditingController();
-
+  String id = "";
   String basvuruDurum = "";
+  String olusturmaTarihi = "";
+  String onaylanmaTarihi = "";
+  String reddedilmeTarihi = "";
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   DateTime currentTime = DateTime.now();
@@ -376,6 +379,7 @@ class _DgsBasvuruState extends State<DgsBasvuru> {
                   child: InkWell(
                     onTap: () {
                       _dgsBasvuruService.basvuruOlustur(
+                          id,
                           loggedInUser.userName,
                           loggedInUser.tcId,
                           loggedInUser.dogumTarihi,
@@ -389,6 +393,9 @@ class _DgsBasvuruState extends State<DgsBasvuru> {
                           _ogrenciDiplomaNotuController.text,
                           _ogrenciYerlesmePuaniController.text,
                           _ogrenciYerlesmeYiliController.text,
+                          olusturmaTarihi,
+                          onaylanmaTarihi,
+                          reddedilmeTarihi,
                           basvuruDurum);
                       showDialog(
                           context: context,

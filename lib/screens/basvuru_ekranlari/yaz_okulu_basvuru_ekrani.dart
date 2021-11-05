@@ -55,6 +55,10 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
   TextEditingController _universiteController = TextEditingController();
   TextEditingController _yazOkuluTarihController = TextEditingController();
   String basvuruDurum = "";
+  String olusturmaTarihi = "";
+  String onaylanmaTarihi = "";
+  String reddedilmeTarihi = "";
+  String id = "";
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   YazOkuluBasvuruService _yazOkuluBasvuruService = YazOkuluBasvuruService();
@@ -160,6 +164,7 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Danışman Ad-Soyad'),
+                  controller: _danismanController,
                 ),
               ),
               Padding(
@@ -622,6 +627,7 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
               InkWell(
                 onTap: () {
                   _yazOkuluBasvuruService.basvuruOlustur(
+                      id,
                       loggedInUser.userName!,
                       loggedInUser.email!,
                       loggedInUser.gsm!,
@@ -675,6 +681,9 @@ class _YazOkuluBasvuruState extends State<YazOkuluBasvuru> {
                           },
                         ])
                       },
+                      olusturmaTarihi,
+                      onaylanmaTarihi,
+                      reddedilmeTarihi,
                       basvuruDurum);
                   showDialog(
                       context: context,

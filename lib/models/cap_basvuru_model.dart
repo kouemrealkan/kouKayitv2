@@ -17,6 +17,9 @@ class CapBasvuruModel {
   String? ogrenciNumarasi;
   String? basvurulanFakulte;
   String? basvurulanBolum;
+  String? olusturmaTarihi;
+  String? onaylanmaTarihi;
+  String? reddedilmeTarihi;
   String? basvuruDurumu;
 
   CapBasvuruModel(
@@ -36,6 +39,9 @@ class CapBasvuruModel {
         this.ogrenciNumarasi,
         this.basvurulanFakulte,
         this.basvurulanBolum,
+        this.olusturmaTarihi,
+        this.onaylanmaTarihi,
+        this.reddedilmeTarihi,
         this.basvuruDurumu});
 
   factory CapBasvuruModel.fromSnapshot(DocumentSnapshot snapshot) {
@@ -56,7 +62,34 @@ class CapBasvuruModel {
         ogrenciNumarasi: snapshot["ogrenciNumarasi"],
         basvurulanFakulte: snapshot["basvurulanFakulte"],
         basvurulanBolum: snapshot["basvurulanBolum"],
+        olusturmaTarihi: snapshot["olusturmaTarihi"],
+        onaylanmaTarihi: snapshot["onaylanmaTarihi"],
+        reddedilmeTarihi: snapshot["reddedilmeTarihi"],
         basvuruDurumu: snapshot["basvuruDurumu"]);
+  }
+
+  factory CapBasvuruModel.fromMap(map){
+    return CapBasvuruModel(
+        id: map["id"],
+        ogrenciAd: map["ogrenciAd"],
+        ogrenciTc: map["ogrenciTc"],
+        ogrenciEmail: map["ogrenciEmail"],
+        ogrenciGsm: map["ogrenciGsm"],
+        ogrenciAdres: map["ogrenciAdres"],
+        ogrenciUniversite: map["ogrenciUniversite"],
+        ogrenciFakulte: map["ogrenciFakulte"],
+        ogrenciBolum: map["ogrenciBolum"],
+        ogrenciYariyil: map["ogrenciYariyil"],
+        ogretimTuru: map["ogretimTuru"],
+        ogrenciDisiplin: map["ogrenciDisiplin"],
+        ogrenciNotOrt: map["ogrenciNotOrt"],
+        ogrenciNumarasi: map["ogrenciNumarasi"],
+        basvurulanFakulte: map["basvurulanFakulte"],
+        basvurulanBolum: map["basvurulanBolum"],
+        olusturmaTarihi: map["olusturmaTarihi"].toString(),
+        onaylanmaTarihi: map["onaylanmaTarihi"],
+        reddedilmeTarihi: map["reddedilmeTarihi"],
+        basvuruDurumu: map["basvuruDurumu"]);
   }
 
 }

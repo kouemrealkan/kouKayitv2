@@ -18,10 +18,14 @@ class _CapBasvuruEkraniState extends State<CapBasvuruEkrani> {
   List<String> _checkedOgretimTuru = [];
   List<String> _checkedSinifTuru = [];
   String basvuruDurum = "";
+  String olusturmaTarihi = "";
+  String onaylanmaTarihi = "";
+  String reddedilmeTarihi = "";
   List<String> _checkedDisiplin = [];
   String secilenHolderOgretim = "";
   String secilenHolderSinif = "";
   String secilenHolderDisiplin = "";
+  String id = "";
 
   TextEditingController _notOrtcontroller = TextEditingController();
   TextEditingController _kayitliOlununPrograminYariyili =
@@ -382,6 +386,7 @@ class _CapBasvuruEkraniState extends State<CapBasvuruEkrani> {
             InkWell(
               onTap: () {
                 _capBasvuruService.basvuruOlustur(
+                    id,
                     loggedInUser.userName!,
                     loggedInUser.tcId,
                     loggedInUser.email,
@@ -397,6 +402,9 @@ class _CapBasvuruEkraniState extends State<CapBasvuruEkrani> {
                     loggedInUser.ogrenciNo,
                     _basvurulanFakulteController.text,
                     _basvurulanBolumController.text,
+                    olusturmaTarihi,
+                    onaylanmaTarihi,
+                    reddedilmeTarihi,
                     basvuruDurum);
                 showDialog(
                     context: context,

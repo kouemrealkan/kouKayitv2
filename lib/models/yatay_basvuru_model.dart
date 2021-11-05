@@ -23,6 +23,9 @@ class YatayGecisBasvuruModel {
   String? basvurulanFakulte;
   String? basvurulanBolum;
   String? basvurulanBolumPuan;
+  String? olusturmaTarihi;
+  String? onaylanmaTarihi;
+  String? reddedilmeTarihi;
   String? basvuruDurumu;
   String? docId;
   YatayGecisBasvuruModel(
@@ -48,6 +51,9 @@ class YatayGecisBasvuruModel {
       this.basvurulanFakulte,
       this.basvurulanBolum,
       this.basvurulanBolumPuan,
+      this.olusturmaTarihi,
+      this.onaylanmaTarihi,
+      this.reddedilmeTarihi,
       this.docId,
       this.basvuruDurumu});
 
@@ -74,11 +80,15 @@ class YatayGecisBasvuruModel {
         basvurulanFakulte: snapshot["basvurulanFakulte"],
         basvurulanBolum: snapshot["basvurulanBolum"],
         basvurulanBolumPuan: snapshot["basvurulanBolumPuan"],
+        olusturmaTarihi: snapshot["olusturmaTarihi"],
+        onaylanmaTarihi: snapshot["onaylanmaTarihi"],
+        reddedilmeTarihi: snapshot["reddedilmeTarihi"],
         basvuruDurumu: snapshot["basvuruDurumu"]);
   }
 
   factory YatayGecisBasvuruModel.fromMap(map) {
     return YatayGecisBasvuruModel(
+        id: map["id"],
         basvuruTuru: map["basvuruTuru"],
         ogrenciAd: map["ogrenciAd"],
         ogrenciTc: map["ogrenciTc"],
@@ -99,6 +109,9 @@ class YatayGecisBasvuruModel {
         basvurulanFakulte: map["basvurulanFakulte"],
         basvurulanBolum: map["basvurulanBolum"],
         basvurulanBolumPuan: map["basvurulanBolumPuan"],
+        olusturmaTarihi: map["olusturmaTarihi"],
+        onaylanmaTarihi: map["onaylanmaTarihi"],
+        reddedilmeTarihi: map["reddedilmeTarihi"],
         basvuruDurumu: map["basvuruDurumu"],
         docId: map["docId"]);
   }

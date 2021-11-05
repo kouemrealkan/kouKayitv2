@@ -3,6 +3,7 @@ import 'package:basvurukayit/models/user_model.dart';
 import 'package:basvurukayit/screens/basvuru_ekranlari/dgs_basvuru_ekrani.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/cap_basvuru_goruntuleme.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/dgs_basvuru_goruntuleme.dart';
+import 'package:basvurukayit/screens/basvuru_goruntuleme/intibak_basvuru_goruntuleme.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/yatay_gecis_goruntuleme.dart';
 import 'package:basvurukayit/screens/basvuru_ekranlari/cap_basvuru_ekrani.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/yaz_okulu_goruntuleme.dart';
@@ -138,7 +139,7 @@ class _SecimEkraniState extends State<SecimEkrani> {
                     Icons.home,
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>IntibakBasvuru()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>IntibakGoruntuleme()));
                   },
                 ),
                 ListTile(

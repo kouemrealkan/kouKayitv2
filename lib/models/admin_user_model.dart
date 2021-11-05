@@ -16,3 +16,13 @@ class AdminUserModel {
         imgUrl: map["imgUrl"]);
   }
 }
+
+
+
+
+
+
+
+
+
+

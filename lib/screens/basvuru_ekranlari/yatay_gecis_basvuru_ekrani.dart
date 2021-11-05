@@ -20,15 +20,20 @@ class YatayGecisBasvuru extends StatefulWidget {
 }
 
 class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
-  TextEditingController  _notOrtcontroller = TextEditingController();
+  TextEditingController _notOrtcontroller = TextEditingController();
   TextEditingController _yerlesmeYiliController = TextEditingController();
-  TextEditingController  _puanController= TextEditingController();
+  TextEditingController _puanController = TextEditingController();
   TextEditingController _yabanciDilController = TextEditingController();
   TextEditingController _basvurulanFakulteController = TextEditingController();
   TextEditingController _basvurulanBolumController = TextEditingController();
-  TextEditingController _basvurulanProgramYilPuanController = TextEditingController();
+  TextEditingController _basvurulanProgramYilPuanController =
+      TextEditingController();
 
   String basvuruDurum = "";
+  String olusturmaTarihi = "";
+  String onaylanmaTarihi = "";
+  String reddedilmeTarihi = "";
+  String id = "";
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   DateTime currentTime = DateTime.now();
@@ -399,12 +404,14 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                       if (selectedDisiplin.length > 1) {
                         selectedDisiplin.removeAt(0);
                         print('selected length  ${selectedDisiplin.length}');
-                        print('selected value : ${selectedDisiplin.toString()}');
+                        print(
+                            'selected value : ${selectedDisiplin.toString()}');
                         secilenHolderDisiplin = selectedDisiplin.join("");
                         print("değerrrrrr" + secilenHolderDisiplin);
                       } else {
                         print("only one");
-                        print('selected value : ${selectedDisiplin.toString()}');
+                        print(
+                            'selected value : ${selectedDisiplin.toString()}');
                         secilenHolderDisiplin = selectedDisiplin.join("");
                         print("değerrrrrr" + secilenHolderDisiplin);
                       }
@@ -557,7 +564,6 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                     labels: <String>[
                       "BAŞVURUSU UYGUNDUR",
                       "BAŞVURUSU UYGUN DEĞİLDİR",
-
                     ],
                     disabled: [
                       "BAŞVURUSU UYGUNDUR",
@@ -607,33 +613,67 @@ class _YatayGecisBasvuruState extends State<YatayGecisBasvuru> {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
-              Padding(padding: const EdgeInsets.only(left: 8,right: 8,bottom: 25),
-              child: InkWell(
-                onTap: (){
-                  _yatayBasvuruService.basvuruOlustur(secilenHolderBasvuru, loggedInUser.userName, loggedInUser.tcId, loggedInUser.dogumTarihi, loggedInUser.email, loggedInUser.gsm, loggedInUser.evAdres, loggedInUser.fakulte, loggedInUser.bolum, secilenHolderOgretim, secilenHolderSinif, secilenHolderDisiplin, _notOrtcontroller.text, loggedInUser.ogrenciNo, _yerlesmeYiliController.text, _puanController.text, _yabanciDilController.text, _basvurulanFakulteController.text, _basvurulanBolumController.text, _basvurulanProgramYilPuanController.text ,basvuruDurum);
-                  showDialog(context: context, builder: (_)=>AlertDialog(
-                    title: Text('Başvuru onayınız alındı'),
-                    content: Text('Kontroller ardından onay/ret işlemi gerçekleştirilecektir'),
-                  )).then((value) =>Navigator.push(context, MaterialPageRoute(builder: (context)=>SecimEkrani())));
-
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green,width: 2),
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Center(
-                      child: Text("Başvuruyu Kaydet",style: TextStyle(color: Colors.black),),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8, bottom: 25),
+                  child: InkWell(
+                    onTap: () {
+                      _yatayBasvuruService.basvuruOlustur(
+                          id,
+                          secilenHolderBasvuru,
+                          loggedInUser.userName,
+                          loggedInUser.tcId,
+                          loggedInUser.dogumTarihi,
+                          loggedInUser.email,
+                          loggedInUser.gsm,
+                          loggedInUser.evAdres,
+                          loggedInUser.fakulte,
+                          loggedInUser.bolum,
+                          secilenHolderOgretim,
+                          secilenHolderSinif,
+                          secilenHolderDisiplin,
+                          _notOrtcontroller.text,
+                          loggedInUser.ogrenciNo,
+                          _yerlesmeYiliController.text,
+                          _puanController.text,
+                          _yabanciDilController.text,
+                          _basvurulanFakulteController.text,
+                          _basvurulanBolumController.text,
+                          _basvurulanProgramYilPuanController.text,
+                          olusturmaTarihi,
+                          onaylanmaTarihi,
+                          reddedilmeTarihi,
+                          basvuruDurum);
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: Text('Başvuru onayınız alındı'),
+                                content: Text(
+                                    'Kontroller ardından onay/ret işlemi gerçekleştirilecektir'),
+                              )).then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SecimEkrani())));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.green, width: 2),
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Center(
+                          child: Text(
+                            "Başvuruyu Kaydet",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-
-                )
+                  ))
             ],
           ),
         ),

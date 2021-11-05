@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:basvurukayit/models/dgs_basvuru_model.dart';
 import 'package:basvurukayit/models/yatay_basvuru_model.dart';
 import 'package:basvurukayit/screens/basvuru_goruntuleme/yatay_gecis_goruntuleme.dart';
+import 'package:basvurukayit/service/dgs_basvuru_service.dart';
 import 'package:basvurukayit/service/yatay_basvuru_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,35 +18,34 @@ import 'dart:io';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class YatayBasvuruPdf extends StatefulWidget {
+class DgsBasvuruPdf extends StatefulWidget {
   final String id;
-  const YatayBasvuruPdf({Key? key, required this.id}) : super(key: key);
+  const DgsBasvuruPdf({Key? key, required this.id}) : super(key: key);
 
   @override
-  _YatayBasvuruPdfState createState() => _YatayBasvuruPdfState(id);
+  _DgsBasvuruPdfState createState() => _DgsBasvuruPdfState(id);
 }
 
-class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
+class _DgsBasvuruPdfState extends State<DgsBasvuruPdf> {
   final String id;
-  YatayGecisBasvuruModel yatayGecisBasvuruModel = YatayGecisBasvuruModel();
-  YatayBasvuruService yatayBasvuruService = YatayBasvuruService();
-  _YatayBasvuruPdfState(this.id);
+  DgsBasvuruModel dgsBasvuruModel = DgsBasvuruModel();
+  DgsBasvuruService _dgsBasvuruService = DgsBasvuruService();
+  _DgsBasvuruPdfState(this.id);
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     FirebaseFirestore.instance
-        .collection("yatay_gecis_basvuru")
+        .collection("dgs_basvuru")
         .doc(this.id)
         .get()
         .then((value) {
-      this.yatayGecisBasvuruModel =
-          YatayGecisBasvuruModel.fromMap(value.data());
+      this.dgsBasvuruModel =
+          DgsBasvuruModel.fromMap(value.data());
       setState(() {
         //  _yatayBasvuruService.basvurulariGetirPdf(yatayGecisBasvuruModel);
       });
     });
-
   }
 
 
@@ -105,12 +106,12 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     PdfBrush solidBrush = PdfBrushes.black;
     Rect bounds = Rect.fromLTWH(0, 160, graphics.clientSize.width, 40);
     graphics.drawRectangle(brush: solidBrush, bounds: bounds);
-  //  PdfTrueTypeFont(File(""));
-   //PdfFont fontStyle = PdfFont.ttf(await rootBundle.load("assets/fonts/arial.tff"));
+    //  PdfTrueTypeFont(File(""));
+    //PdfFont fontStyle = PdfFont.ttf(await rootBundle.load("assets/fonts/arial.tff"));
     PdfFont styleFont = PdfTrueTypeFont(await _readFontData(), 14);
-   // PdfFont subHeadingFont = PdfTrueTypeFont(File("assets/fonts/arial.ttf").readAsBytesSync(),14);
+    // PdfFont subHeadingFont = PdfTrueTypeFont(File("assets/fonts/arial.ttf").readAsBytesSync(),14);
     PdfTextElement element =
-        PdfTextElement(text: "KOCAELI UNIVERSITESI", font: styleFont);
+    PdfTextElement(text: "KOCAELI UNIVERSITESI", font: styleFont);
     element.brush = PdfBrushes.white;
     PdfLayoutResult result = element.draw(
         page: page, bounds: Rect.fromLTWH(10, bounds.top + 15, 0, 0))!;
@@ -124,10 +125,10 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     graphics.drawString(currentDate, styleFont,
         brush: element.brush,
         bounds: Offset(graphics.clientSize.width - textSize.width - 10,
-                result.bounds.top) &
-            Size(textSize.width + 2, 20));
+            result.bounds.top) &
+        Size(textSize.width + 2, 20));
     element = PdfTextElement(
-        text: 'Ogrenci Ad : ${yatayGecisBasvuruModel.ogrenciAd}',
+        text: 'Ogrenci Ad : ${dgsBasvuruModel.ogrenciAd}',
         font: styleFont
     );
     element.brush = PdfBrushes.black;
@@ -136,9 +137,9 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 25, 0, 0))!;
 
 
-   // PdfFont helvetica = PdfStandardFont(PdfFontFamily.helvetica, 15);
+    // PdfFont helvetica = PdfStandardFont(PdfFontFamily.helvetica, 15);
     element = PdfTextElement(
-        text: 'Basvuru Turu : ${yatayGecisBasvuruModel.basvuruTuru}',
+        text: 'Basvuru Turu : ${dgsBasvuruModel.ogrenciUniversite}',
         font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
@@ -146,21 +147,21 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
     element = PdfTextElement(
         text:
-            'Basvurulan Fakulte : ${yatayGecisBasvuruModel.basvurulanFakulte}',
+        'Basvurulan Fakulte : ${dgsBasvuruModel.ogrenciBolum}',
         font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
     element = PdfTextElement(
-        text: 'Basvurulan Bolum : ${yatayGecisBasvuruModel.basvurulanBolum}',
+        text: 'Basvurulan Bolum : ${dgsBasvuruModel.ogrenciAdres}',
         font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
         page: page,
         bounds: Rect.fromLTWH(10, result.bounds.bottom + 10, 0, 0))!;
     element = PdfTextElement(
-        text: 'Ogrenci Numarasi : ${yatayGecisBasvuruModel.ogrenciNumarasi}',
+        text: 'Ogrenci Numarasi : ${dgsBasvuruModel.ogrenciEmail}',
         font: styleFont);
     element.brush = PdfBrushes.black;
     result = element.draw(
@@ -192,7 +193,7 @@ class _YatayBasvuruPdfState extends State<YatayBasvuruPdf> {
     // PdfTextElement element = PdfTextElement(text: 'asdasd',font: PdfStandardFont(PdfFontFamily.timesRoman, 10,style: PdfFontStyle.bold)
     List<int> bytes = document.save();
     document.dispose();
-    saveAndLaunchFile(bytes, '${yatayGecisBasvuruModel.ogrenciAd}.pdf');
+    saveAndLaunchFile(bytes, '${dgsBasvuruModel.ogrenciAd}.pdf');
   }
 
   Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
