@@ -43,8 +43,8 @@ class YazOkuluBasvuruService {
       'sorumluOlunanDersler': sorumluOlunanDersler,
       'yazOkuluAlinanDersler': yazOkuluAlinanDersler,
       'olusturmaTarihi': DateTime.now().toString(),
-      'basvuruDurumu': basvuruDurumu,
       'onaylanmaTarihi': onaylanmaTarihi,
+      'reddedilmeTarihi': reddedilmeTarihi,
       'basvuruDurumu': basvuruDurumu,
     });
 
@@ -78,6 +78,9 @@ class YazOkuluBasvuruService {
         yazOkuluTarih: yazOkuluTarih,
         sorumluOlunanDersler: sorumluOlunanDersler,
         yazOkuluAlinanDersler: yazOkuluAlinanDersler,
+        olusturmaTarihi: olusturmaTarihi,
+        onaylanmaTarihi: onaylanmaTarihi,
+        reddedilmeTarihi: reddedilmeTarihi,
         basvuruDurumu: basvuruDurumu);
   }
 
@@ -91,4 +94,61 @@ class YazOkuluBasvuruService {
     //var ref = _firestore.collection("yatay_gecis_basvuru").snapshots();
     //return ref;
   }
+
+  Stream<QuerySnapshot> basvurulariGetirAdmin() {
+    CollectionReference collectionReference =
+    _firestore.collection("yaz_okulu_basvuru");
+    Query query =
+    collectionReference.where("basvuruDurumu", isEqualTo: "onay bekliyor");
+    //print("email degeri +++:" + loggedInUser.email!);
+    return query.snapshots();
+    //var ref = _firestore.collection("yatay_gecis_basvuru").snapshots();
+    //return ref;
+  }
+
+  Stream<QuerySnapshot> onayliBasvurulariGetirAdmin() {
+    CollectionReference collectionReference =
+    _firestore.collection("yaz_okulu_basvuru");
+    Query query =
+    collectionReference.where("basvuruDurumu", isEqualTo: "onaylandı");
+    //print("email degeri +++:" + loggedInUser.email!);
+    return query.snapshots();
+    //var ref = _firestore.collection("yatay_gecis_basvuru").snapshots();
+    //return ref;
+  }
+
+  Stream<QuerySnapshot> reddedilenBasvurulariGetirAdmin() {
+    CollectionReference collectionReference =
+    _firestore.collection("yaz_okulu_basvuru");
+    Query query =
+    collectionReference.where("basvuruDurumu", isEqualTo: "reddedildi");
+    //print("email degeri +++:" + loggedInUser.email!);
+    return query.snapshots();
+    //var ref = _firestore.collection("yatay_gecis_basvuru").snapshots();
+    //return ref;
+  }
+
+  Future basvuruOnaylaAdmin(String selectedDoc) async {
+    FirebaseFirestore.instance
+        .collection("yaz_okulu_basvuru")
+        .doc(selectedDoc)
+        .update({
+      'basvuruDurumu': "onaylandı",
+      'onaylanmaTarihi': DateTime.now().toString(),
+    });
+  }
+
+  Future basvuruReddetAdmin(String selectedDoc) async {
+    FirebaseFirestore.instance
+        .collection("yaz_okulu_basvuru")
+        .doc(selectedDoc)
+        .update({
+      'basvuruDurumu': "reddedildi",
+      'reddedilmeTarihi': DateTime.now().toString(),
+    });
+  }
+
+
+
+
 }

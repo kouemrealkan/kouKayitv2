@@ -62,9 +62,9 @@ class YatayBasvuruService {
       'basvurulanBolum': basvurulanBolum,
       'basvurulanBolumPuan': basvurulanBolumPuan,
       'olusturmaTarihi': DateTime.now().toString(),
-      'basvuruDurumu': basvuruDurumu,
       'onaylanmaTarihi': onaylanmaTarihi,
-      'reddedilmeTarihi': reddedilmeTarihi
+      'reddedilmeTarihi': reddedilmeTarihi,
+      'basvuruDurumu': basvuruDurumu,
     });
 
     /*   var documentRef = await ref.add({
@@ -167,7 +167,7 @@ class YatayBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "onaylandı",
-      'onaylanmaTarihi': DateTime.now(),
+      'onaylanmaTarihi': DateTime.now().toString(),
     });
   }
 
@@ -177,7 +177,7 @@ class YatayBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "reddedildi",
-      'reddedilmeTarihi': DateTime.now(),
+      'reddedilmeTarihi': DateTime.now().toString(),
     });
   }
 

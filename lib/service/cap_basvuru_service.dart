@@ -48,7 +48,7 @@ class CapBasvuruService {
       'ogrenciNumarasi': ogrenciNumarasi,
       'basvurulanFakulte': basvurulanFakulte,
       'basvurulanBolum': basvurulanBolum,
-      'olusturmaTarihi': DateTime.now(),
+      'olusturmaTarihi': DateTime.now().toString(),
       'onaylanmaTarihi': onaylanmaTarihi,
       'reddedilmeTarihi': reddedilmeTarihi,
       'basvuruDurumu': basvuruDurumu
@@ -89,6 +89,9 @@ class CapBasvuruService {
         ogrenciNumarasi: ogrenciNumarasi,
         basvurulanFakulte: basvurulanFakulte,
         basvurulanBolum: basvurulanBolum,
+        olusturmaTarihi: olusturmaTarihi,
+        onaylanmaTarihi: onaylanmaTarihi,
+        reddedilmeTarihi: reddedilmeTarihi,
         basvuruDurumu: basvuruDurumu);
   }
 
@@ -106,7 +109,7 @@ class CapBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "onaylandı",
-      'onaylanmaTarihi': DateTime.now(),
+      'onaylanmaTarihi': DateTime.now().toString(),
     });
   }
 
@@ -116,7 +119,7 @@ class CapBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "reddedildi",
-      'reddedilmeTarihi': DateTime.now(),
+      'reddedilmeTarihi': DateTime.now().toString(),
     });
   }
 

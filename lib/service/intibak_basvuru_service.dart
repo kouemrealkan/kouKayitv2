@@ -41,11 +41,11 @@ class IntibakBasvuruService {
       'sorumluOlunanDersler': sorumluOlunanDersler,
       'dahaOnceAlinanDersler': dahaOnceAlinanDersler,
       'olusturmaTarihi': DateTime.now().toString(),
-      'basvuruDurumu': basvuruDurumu,
       'onaylanmaTarihi': onaylanmaTarihi,
       'reddedilmeTarihi': reddedilmeTarihi,
+      'basvuruDurumu': basvuruDurumu,
     });
-   /* var docRef = await ref.add({
+    /* var docRef = await ref.add({
       'ogrenciAd': ogrenciAd,
       'ogrenciEmail': ogrenciEmail,
       'ogrenciGsm': ogrenciGsm,
@@ -72,7 +72,10 @@ class IntibakBasvuruService {
         ogrenciBolum: ogrenciBolum,
         muafOlunanUniversite: muafOlunanUniversite,
         sorumluOlunanDersler: sorumluOlunanDersler,
-        dahaOnceAlinanDersler: dahaOnceAlinanDersler);
+        dahaOnceAlinanDersler: dahaOnceAlinanDersler,
+        olusturmaTarihi: olusturmaTarihi,
+        onaylanmaTarihi: onaylanmaTarihi,
+        reddedilmeTarihi: reddedilmeTarihi);
   }
 
   Stream<QuerySnapshot> basvurulariGetir(UserModel userModel) {
@@ -89,7 +92,7 @@ class IntibakBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "onaylandı",
-      'onaylanmaTarihi': DateTime.now(),
+      'onaylanmaTarihi': DateTime.now().toString(),
     });
   }
 
@@ -99,7 +102,7 @@ class IntibakBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "reddedildi",
-      'reddedilmeTarihi': DateTime.now(),
+      'reddedilmeTarihi': DateTime.now().toString(),
     });
   }
 

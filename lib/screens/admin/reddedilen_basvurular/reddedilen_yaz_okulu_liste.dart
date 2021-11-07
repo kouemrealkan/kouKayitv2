@@ -1,42 +1,42 @@
-import 'package:basvurukayit/service/cap_basvuru_service.dart';
+import 'package:basvurukayit/service/yaz_okulu_basvuru_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../admin_paneli_dart.dart';
-class ReddedilenCapListesi extends StatefulWidget {
-  const ReddedilenCapListesi({Key? key}) : super(key: key);
+class ReddedilenYazOkuluListe extends StatefulWidget {
+  const ReddedilenYazOkuluListe({Key? key}) : super(key: key);
 
   @override
-  _ReddedilenCapListesiState createState() => _ReddedilenCapListesiState();
+  _ReddedilenYazOkuluListeState createState() => _ReddedilenYazOkuluListeState();
 }
 
-class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
-  CapBasvuruService _capBasvuruService = CapBasvuruService();
+class _ReddedilenYazOkuluListeState extends State<ReddedilenYazOkuluListe> {
+  YazOkuluBasvuruService _yazOkuluBasvuruService = YazOkuluBasvuruService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
         title: Text(
-          "Reddedilen ÇAP Başvuruları",
+          "Reddedilen Yaz Okulu Başvuruları",
           style: TextStyle(fontSize: 18),
         ),
       ),
       body: Material(
         color: Colors.green,
         child: StreamBuilder<QuerySnapshot>(
-          stream: _capBasvuruService.reddedilenBasvurulariGetirAdmin(),
-          builder: (context,snapshot){
+          stream: _yazOkuluBasvuruService.reddedilenBasvurulariGetirAdmin(),
+          builder: (context, snapshot) {
             return !snapshot.hasData
                 ? CircularProgressIndicator()
                 : ListView.builder(
               itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context,index){
+              itemBuilder: (context, index) {
                 DocumentSnapshot basvuruListesi =
                 snapshot.data!.docs[index];
                 return Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 350,
+                    height: 300,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Colors.green, width: 1),
@@ -70,43 +70,6 @@ class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
                           Row(
                             children: [
                               Text(
-                                "ÖĞRENCİ TC : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciTc']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRENCİ ADRES : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciAdres']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-
-                          Row(
-                            children: [
-                              Text(
                                 "ÖĞRENCİ EMAİL : ",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
@@ -125,31 +88,13 @@ class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
                           Row(
                             children: [
                               Text(
-                                "ÖĞRENCİ GSM : ",
+                                "ÖĞRENCİ YAZIŞMA ADRESİ : ",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                "${basvuruListesi['ogrenciGsm']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRENCİ ÜNİVERSİTE : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciUniversite']}",
+                                "${basvuruListesi['ogrenciAdres']}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -194,107 +139,17 @@ class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRENCİ NOT ORTALAMASI : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciNotOrt']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRENCİ NUMARASI : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciNumarasi']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRENCİ YARIYIL : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogrenciYariyil']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "ÖĞRETİM TÜRÜ : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['ogretimTuru']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "BAŞVURULAN FAKÜLTE : ",
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "${basvuruListesi['basvurulanFakulte']}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
 
                           Row(
                             children: [
                               Text(
-                                "BAŞVURULAN BÖLÜM : ",
+                                "Yaz Okulu İçin Başvurulan Üniversite : ",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                "${basvuruListesi['basvurulanBolum']}",
+                                "${basvuruListesi['basvurulanUniversite']}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
@@ -306,7 +161,25 @@ class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
                           Row(
                             children: [
                               Text(
-                                "RED TARİHİ",
+                                "Belge Oluşturulma Tarihi : ",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                "${basvuruListesi['olusturmaTarihi']}",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Belge Reddedilme Tarihi : ",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                                 textAlign: TextAlign.center,
@@ -321,6 +194,7 @@ class _ReddedilenCapListesiState extends State<ReddedilenCapListesi> {
                               ),
                             ],
                           ),
+
 
                           Padding(
                             padding: EdgeInsets.all(5.0),

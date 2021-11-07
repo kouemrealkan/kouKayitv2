@@ -1,12 +1,18 @@
 import 'package:basvurukayit/models/admin_user_model.dart';
 import 'package:basvurukayit/screens/admin/bekleyen_basvurular/bekleyen_cap_liste.dart';
 import 'package:basvurukayit/screens/admin/bekleyen_basvurular/bekleyen_dgs_liste.dart';
+import 'package:basvurukayit/screens/admin/bekleyen_basvurular/bekleyen_intibak_liste_dart.dart';
 import 'package:basvurukayit/screens/admin/bekleyen_basvurular/bekleyen_yatay_gecis_liste.dart';
+import 'package:basvurukayit/screens/admin/bekleyen_basvurular/bekleyen_yaz_okulu_liste.dart';
 import 'package:basvurukayit/screens/admin/onaylanan_basvurular/onayli_cap_liste.dart';
 import 'package:basvurukayit/screens/admin/onaylanan_basvurular/onayli_dgs_liste.dart';
+import 'package:basvurukayit/screens/admin/onaylanan_basvurular/onayli_intibak_liste.dart';
+import 'package:basvurukayit/screens/admin/onaylanan_basvurular/onayli_yaz_okulu_liste.dart';
 import 'package:basvurukayit/screens/admin/reddedilen_basvurular/reddedilen_cap_basvuru_liste.dart';
 import 'package:basvurukayit/screens/admin/reddedilen_basvurular/reddedilen_dgs_basvuru_liste.dart';
+import 'package:basvurukayit/screens/admin/reddedilen_basvurular/reddedilen_intibak_liste.dart';
 import 'package:basvurukayit/screens/admin/reddedilen_basvurular/reddedilen_yatay_basvuru_liste.dart';
+import 'package:basvurukayit/screens/admin/reddedilen_basvurular/reddedilen_yaz_okulu_liste.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +132,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.save_sharp,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>BekleyenYazOkuluListesi()));
                     },
                   ),
                   ListTile(
@@ -135,7 +141,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.assignment_turned_in_rounded,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OnayliYazOkuluListe()));
                     },
                   ),
                   ListTile(
@@ -144,7 +150,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.warning_sharp,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReddedilenYazOkuluListe()));
                     },
                   ),
                 ],),
@@ -155,7 +161,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.save_sharp,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>BekleyenIntibakListesi()));
                     },
                   ),
                   ListTile(
@@ -164,7 +170,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.assignment_turned_in_rounded,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OnayliIntibakListesi()));
                     },
                   ),
                   ListTile(
@@ -173,7 +179,7 @@ class _AdminPaneliState extends State<AdminPaneli> {
                       Icons.warning_sharp,
                     ),
                     onTap: () {
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>YatayGecisGoruntuleme()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ReddedilenIntibakListe()));
                     },
                   ),
                 ],),

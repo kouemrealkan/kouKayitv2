@@ -83,6 +83,9 @@ class DgsBasvuruService {
         ogrenciDiplomaNotu: ogrenciDiplomaNotu,
         ogrenciYerlesmePuani: ogrenciYerlesmePuani,
         ogrenciYerlesmeYili: ogrenciYerlesmeYili,
+        olusturmaTarihi: olusturmaTarihi,
+        onaylanmaTarihi: onaylanmaTarihi,
+        reddedilmeTarihi: reddedilmeTarihi,
         basvuruDurumu: basvuruDurumu);
   }
 
@@ -103,7 +106,7 @@ class DgsBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "onaylandı",
-      'onaylanmaTarihi': DateTime.now(),
+      'onaylanmaTarihi': DateTime.now().toString(),
     });
   }
 
@@ -113,7 +116,7 @@ class DgsBasvuruService {
         .doc(selectedDoc)
         .update({
       'basvuruDurumu': "reddedildi",
-      'reddedilmeTarihi': DateTime.now(),
+      'reddedilmeTarihi': DateTime.now().toString(),
     });
   }
 

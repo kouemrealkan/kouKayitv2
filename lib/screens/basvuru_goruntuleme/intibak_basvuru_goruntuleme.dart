@@ -16,6 +16,17 @@ class IntibakGoruntuleme extends StatefulWidget {
 }
 
 class _IntibakGoruntulemeState extends State<IntibakGoruntuleme> {
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   IntibakBasvuruService _intibakBasvuruService = IntibakBasvuruService();
@@ -209,6 +220,64 @@ class _IntibakGoruntulemeState extends State<IntibakGoruntuleme> {
                                   ],
                                 ),
                               ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "OLUŞTURMA TARİHİ : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['olusturmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "RED TARİHİ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['reddedilmeTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "ONAY TARİHİ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['onaylanmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [

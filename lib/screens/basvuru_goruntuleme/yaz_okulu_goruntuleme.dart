@@ -17,6 +17,18 @@ class YazOkuluBasvuruGoruntuleme extends StatefulWidget {
 
 class _YazOkuluBasvuruGoruntulemeState
     extends State<YazOkuluBasvuruGoruntuleme> {
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   YazOkuluBasvuruService _yazOkuluBasvuruService = YazOkuluBasvuruService();
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -123,7 +135,6 @@ class _YazOkuluBasvuruGoruntulemeState
                                   ),
                                 ],
                               ),
-
                               Text(
                                 "SORUMLU OLUNAN DERSLER : ",
                                 style: TextStyle(
@@ -140,35 +151,93 @@ class _YazOkuluBasvuruGoruntulemeState
                               ),
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                child:DataTable(
+                                child: DataTable(
                                   columns: <DataColumn>[
                                     DataColumn(label: Text('Ders Adı ve Kodu')),
                                     DataColumn(label: Text('Akts')),
                                     DataColumn(label: Text('t')),
                                     DataColumn(label: Text('u')),
                                   ],
-                                  rows: <DataRow> [
-                                   DataRow(
-                                     cells: [
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                       DataCell(Text("${basvuruListesi['sorumluOlunanDersler']}")),
-                                     ]
-                                   )
+                                  rows: <DataRow>[
+                                    DataRow(cells: [
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                      DataCell(Text(
+                                          "${basvuruListesi['sorumluOlunanDersler']}")),
+                                    ])
                                   ],
-                                ) ,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "OLUŞTURMA TARİHİ : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['olusturmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "RED TARİHİ :",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['reddedilmeTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "ONAY TARİHİ :",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['onaylanmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ElevatedButton(
                                     child: Text("PDF Önizleme"),
                                     style: ButtonStyle(
                                       backgroundColor:
-                                      MaterialStateProperty.all(
-                                          Colors.blue),
+                                          MaterialStateProperty.all(
+                                              Colors.blue),
                                     ),
                                     onPressed: () {
                                       Navigator.push(
@@ -177,7 +246,7 @@ class _YazOkuluBasvuruGoruntulemeState
                                               builder: (context) =>
                                                   YazOkuluBasvuruPdf(
                                                       id: basvuruListesi[
-                                                      "id"])));
+                                                          "id"])));
                                     },
                                   ),
                                   ElevatedButton(
@@ -191,13 +260,12 @@ class _YazOkuluBasvuruGoruntulemeState
                                     },
                                     style: ButtonStyle(
                                       backgroundColor:
-                                      MaterialStateProperty.all(
-                                          Colors.green),
+                                          MaterialStateProperty.all(
+                                              Colors.green),
                                     ),
                                   ),
                                 ],
                               )
-
                             ],
                           ),
                         ),

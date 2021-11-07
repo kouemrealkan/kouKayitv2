@@ -48,7 +48,7 @@ class _YatayGecisGoruntulemeState extends State<YatayGecisGoruntuleme> {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: 380,
+                        height: 420,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(color: Colors.green, width: 1),
@@ -334,6 +334,64 @@ class _YatayGecisGoruntulemeState extends State<YatayGecisGoruntuleme> {
                               SizedBox(
                                 height: 10,
                               ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "OLUŞTURMA TARİHİ : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['olusturmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "RED TARİHİ :",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['reddedilmeTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "ONAY TARİHİ: ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['onaylanmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
                               Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: Card(

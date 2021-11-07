@@ -240,6 +240,64 @@ class _DgsGoruntulemeState extends State<DgsGoruntuleme> {
                                   ),
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "OLUŞTURMA TARİHİ : ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['olusturmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "RED TARİHİ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['reddedilmeTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+                              Row(
+                                children: [
+                                  Text(
+                                    "ONAY TARİHİ",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "${basvuruListesi['onaylanmaTarihi']}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+
+
                               Padding(
                                 padding: EdgeInsets.all(5.0),
                                 child: Card(

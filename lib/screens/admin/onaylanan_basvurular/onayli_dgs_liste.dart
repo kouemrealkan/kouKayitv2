@@ -227,6 +227,26 @@ class _OnayliDgsListesiState extends State<OnayliDgsListesi> {
                               ),
                             ],
                           ),
+
+                          Row(
+                            children: [
+                              Text(
+                                "ONAY TARİHİ",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                "${basvuruListesi['onaylanmaTarihi']}",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+
                           Padding(
                             padding: EdgeInsets.all(5.0),
                             child: Card(
