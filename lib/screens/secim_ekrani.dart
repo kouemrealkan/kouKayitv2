@@ -214,12 +214,19 @@ class _SecimEkraniState extends State<SecimEkrani> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        AutoSizeText("  Kullanıcı Ad-Soyad : ${loggedInUser.userName}",style: TextStyle(color: Colors.white),),
-                        AutoSizeText("  Kullanıcı Email : ${loggedInUser.email}",style: TextStyle(color: Colors.white,)),
-                        AutoSizeText("  Kullanıcı Telefon No : ${loggedInUser.gsm}",style: TextStyle(color: Colors.white)),
-                        AutoSizeText("  Kullanıcı Fakülte : ${loggedInUser.fakulte}",style: TextStyle(color: Colors.white)),
-                        AutoSizeText("  Kullanıcı Bölüm : ${loggedInUser.bolum}",style: TextStyle(color: Colors.white)),
-                        AutoSizeText("  Kullanıcı Üniversite : ${loggedInUser.universite}",style: TextStyle(color: Colors.white)),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Ad-Soyad : ${loggedInUser.userName}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Email : ${loggedInUser.email}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Telefon No : ${loggedInUser.gsm}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Fakülte : ${loggedInUser.fakulte}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Bölüm : ${loggedInUser.bolum}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
+                        AutoSizeText("  Kullanıcı Üniversite : ${loggedInUser.universite}",style: TextStyle(color: Colors.white),minFontSize: 15,),
+                        Padding(padding:EdgeInsets.fromLTRB(0, 10, 0, 0)),
 
 
                       ],

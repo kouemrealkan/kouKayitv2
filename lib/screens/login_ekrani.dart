@@ -167,7 +167,7 @@ class _LoginEkraniState extends State<LoginEkrani> {
                   ),
                   Row(
                     children: [
-                      Text('       Şifremi unuttum/sıfırla: '),
+                      Text('       Şifremi unuttum/sıfırla:    ',style: TextStyle(fontWeight: FontWeight.bold),),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -191,7 +191,7 @@ class _LoginEkraniState extends State<LoginEkrani> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Sisteme kayıt olmak için:  '),
+                      Text('Sisteme kayıt olmak için:  ',style: TextStyle(fontWeight: FontWeight.bold),),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -215,7 +215,7 @@ class _LoginEkraniState extends State<LoginEkrani> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Admin Girişi için:  '),
+                      Text('Admin Girişi için:  ',style: TextStyle(fontWeight: FontWeight.bold),),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

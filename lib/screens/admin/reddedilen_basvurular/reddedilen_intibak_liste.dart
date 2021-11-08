@@ -15,7 +15,7 @@ class _ReddedilenIntibakListeState extends State<ReddedilenIntibakListe> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Reddedilen İntibak Okulu Başvuruları",
+          "Reddedilen İntibak Başvuruları",
           style: TextStyle(fontSize: 18),
         ),
       ),

@@ -17,7 +17,7 @@ class _ReddedilenDgsListesiState extends State<ReddedilenDgsListesi> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Bekleyen DGS Başvuruları",
+          "Reddedilen DGS Başvuruları",
           style: TextStyle(fontSize: 18),
         ),
       ),

@@ -17,7 +17,7 @@ class _BekleyenIntibakListesiState extends State<BekleyenIntibakListesi> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Bekleyen Intibak Başvuruları",
+          "Bekleyen İntibak Başvuruları",
           style: TextStyle(fontSize: 18),
         ),
       ),

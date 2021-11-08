@@ -15,7 +15,7 @@ class _OnayliIntibakListesiState extends State<OnayliIntibakListesi> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Onayli İntibak  Başvuruları",
+          "Onayli İntibak Başvuruları",
           style: TextStyle(fontSize: 18),
         ),
       ),
